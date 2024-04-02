@@ -1,0 +1,24 @@
+# Dependency directories
+node_modules/
+
+# Environment variables
+.env
+
+# Logs
+*.log
+
+# Test coverage
+coverage/
+
+# macOS specific
+.DS_Store
+
+# npm
+npm-debug.log*
+yarn-error.log*
+
+# Process ID files
+*.pid
+
+# Lock files
+*.lock
