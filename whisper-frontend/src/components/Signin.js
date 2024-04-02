@@ -15,6 +15,7 @@ const Signin = ({ onSigninSuccess }) => {
         localStorage.setItem('token', response.data.token);
         onSigninSuccess();
         navigate('/profile');
+        window.location.reload(true);
       }
     } catch (error) {
       console.error('Signin failed:', error.response.data.message);

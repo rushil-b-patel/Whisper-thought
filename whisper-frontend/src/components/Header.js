@@ -7,15 +7,18 @@ const Header = () => {
   const isLoggedIn = localStorage.getItem('token');
   const navigate = useNavigate();
   const { user } = useAuth();
+  const token = localStorage.getItem('token');
+
   useEffect(() => {
     if (isLoggedIn && user) {
       setUserName(user.username);
     }
-  }, [isLoggedIn, user]);
+  }, [token, isLoggedIn, user]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
     navigate('/');
+    window.location.reload(true);
   };
 
   return (

@@ -5,13 +5,14 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [token, setToken] = useState(localStorage.getItem('token'));
 
   useEffect(() => {
     const getUserData = async () => {
       try {
-        const token = localStorage.getItem('token');
         if (!token) {
-          throw new Error('No authentication token found');
+          setUser(null);
+          return;
         }
     
         const response = await axios.get('http://localhost:8000/user/getuser', {
@@ -20,20 +21,24 @@ export const AuthProvider = ({ children }) => {
           },
         });
         setUser(response.data.user);
+        // console.log('User data:', response.data.user);
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
     };    
 
     getUserData();
-  }, []);
+  }, [token]);
 
-  const login = (userData) => {
+  const login = (userData, authToken) => {
     setUser(userData);
+    setToken(authToken); 
+    localStorage.setItem('token', authToken);
   };
-
   const logout = () => {
     setUser(null);
+    setToken(null);
+    localStorage.removeItem('token');
   };
 
   return (
