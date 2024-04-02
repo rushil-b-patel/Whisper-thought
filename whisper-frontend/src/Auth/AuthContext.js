@@ -9,12 +9,21 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const getUserData = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/user/getuser');
+        const token = localStorage.getItem('token');
+        if (!token) {
+          throw new Error('No authentication token found');
+        }
+    
+        const response = await axios.get('http://localhost:8000/user/getuser', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setUser(response.data.user);
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
-    };
+    };    
 
     getUserData();
   }, []);

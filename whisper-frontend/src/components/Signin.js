@@ -11,7 +11,6 @@ const Signin = ({ onSigninSuccess }) => {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:8000/user/login', { email, password });
-      console.log(response.data);
       if (response.data.user) {
         localStorage.setItem('token', response.data.token);
         onSigninSuccess();

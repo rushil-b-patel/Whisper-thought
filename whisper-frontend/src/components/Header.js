@@ -1,20 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { jwtDecode } from "jwt-decode";
-// import { useAuth } from '../Auth/AuthContext';
+import { useAuth } from '../Auth/AuthContext';
 
 const Header = () => {
   const [userName, setUserName] = useState('');
   const isLoggedIn = localStorage.getItem('token');
   const navigate = useNavigate();
-  // const { user, logout } = useAuth();
+  const { user } = useAuth();
   useEffect(() => {
-    if (isLoggedIn) {
-      const decodedToken = jwtDecode(isLoggedIn);
-      setUserName(decodedToken.username);
-      console.log(decodedToken);
+    if (isLoggedIn && user) {
+      setUserName(user.username);
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, user]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
